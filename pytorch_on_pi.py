@@ -20,18 +20,33 @@ from PIL import Image
 # torch.backends.quantized.engine = 'qnnpack'
 # ^ not supported on laptop????
 # TODO : Need to train on certain frame width and height I think for params to line up
-frame_width = 280
-frame_height = 280
+#frame_width = 280
+#frame_height = 280
 #cap = cv2.VideoCapture(0, cv2.CAP_V4L2)
-cap = cv2.VideoCapture(1)
-cap.set(cv2.CAP_PROP_FRAME_WIDTH, frame_width)
-cap.set(cv2.CAP_PROP_FRAME_HEIGHT, frame_height)
+
+#cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(1, cv2.CAP_DSHOW)
+
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
 cap.set(cv2.CAP_PROP_FPS, 36)
 
-preprocess = transforms.Compose([
-    transforms.ToTensor(),
-    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-])
+"""while True:
+    left = 700
+    right = 1200
+    top = 550
+    bottom = 900
+    ret, image = cap.read()
+    # (height, width) = frame.shape[:2]
+    #sky = frame[0:100, 0:200]
+    print(image.shape)
+    image = image[top:bottom, left:right]
+    cv2.imshow('Video', image)
+    print(image.shape)
+
+    if cv2.waitKey(1) == 27:
+        exit(0)
+"""
 classes = ('string1', 'string2', 'string3', 'string4', 'string5', 'string6', 'no_string')
 
 transform = transforms.Compose([
@@ -83,17 +98,21 @@ input_channels = 3
 # Out classes = 7 ... 6 strings + No strings being pressed class
 model = ConvNet(input_channels, num_filters=16, out_classes=7).to('cpu')
 # Dummy inputs so we can plot a summary of the neural network's architecture and no. of parameters
-summary(model, input_size=(input_channels, 280, 280))
+#summary(model, input_size=(input_channels, 280, 280))
 
 
 # LOAD MODEL FROM DISK
 # Double check if model exists
 #FOLDER_NAME = 'photos_colored_strings_cropped'
 #FOLDER_NAME = 'photos_colored_strings_cropped_augmented'
-FOLDER_NAME = 'photos_colored_strings'
+#FOLDER_NAME = 'photos_colored_strings'
+#FOLDER_NAME = 'photos_all_group_members'
+FOLDER_NAME = 'photos_all_group_members_cropped_augmented'
+
+
 model.load_state_dict(torch.load(os.getcwd() + '\\' + FOLDER_NAME + '.pth'))
 print("Loaded model from disk!")
-
+model.eval()
 ##################################################################
 
 #net = models.quantization.mobilenet_v2(pretrained=True, quantize=True)
@@ -112,17 +131,28 @@ with torch.no_grad():
         if not ret:
             raise RuntimeError("failed to read frame")
 
+        # do something with output ...
+        ####################################################################
 
+        left = 700
+        right = 1200
+        top = 550
+        bottom = 900
+        image = image[top:bottom, left:right]
+        cv2.imshow('Video', image)
+        if cv2.waitKey(1) == 27:
+            exit(0)
         # convert opencv output from BGR to RGB
         image = image[:, :, [2, 1, 0]]
+        #image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
         # preprocess
         input_tensor = transform(image)
         # TODO: NEED TO PREPEND EXTRA DIM None, CAUSE TRAINED ON  64 3 280 280 and images are just 3 280 280
         input_tensor = input_tensor[None, :]
         # run model
         output = net(input_tensor)
-        # do something with output ...
-
+        ####################################################################
         # log model performance
         frame_count += 1
         now = time.time()
