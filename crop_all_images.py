@@ -3,13 +3,13 @@ from PIL import Image
 import os.path, sys
 import random
 
-paths = ["photos_all_group_members\\string1",
-        "photos_all_group_members\\string2", 
-        "photos_all_group_members\\string3",
-        "photos_all_group_members\\string4",
-        "photos_all_group_members\\string5",
-        "photos_all_group_members\\string6",
-        "photos_all_group_members\\no string"]
+paths = ["photos_colored_strings\\string1",
+        "photos_colored_strings\\string2",
+        "photos_colored_strings\\string3",
+        "photos_colored_strings\\string4",
+        "photos_colored_strings\\string5",
+        "photos_colored_strings\\string6",
+        "photos_colored_strings\\no_string"]
 
 
 
@@ -45,7 +45,7 @@ def crop():
 
                 f, e = os.path.splitext(fullpath)
                 imCrop = im.crop((left, top, right, bottom))
-                fullpath = os.path.join("photos_all_group_members_cropped_augmented", paths[path_index].split("\\")[-1], item)
+                fullpath = os.path.join("photos_colored_strings_cropped_augmented", paths[path_index].split("\\")[-1], item)
                 imCrop.save(fullpath, quality=100)
         path_index += 1
 
