@@ -30,7 +30,7 @@ cap = cv2.VideoCapture(1, cv2.CAP_DSHOW)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
 cap.set(cv2.CAP_PROP_FPS, 36)
-
+crop = False
 """while True:
     left = 700
     right = 1200
@@ -47,7 +47,7 @@ cap.set(cv2.CAP_PROP_FPS, 36)
     if cv2.waitKey(1) == 27:
         exit(0)
 """
-classes = ('string1', 'string2', 'string3', 'string4', 'string5', 'string6', 'no_string')
+classes = ('no_string','string1', 'string2', 'string3', 'string4', 'string5', 'string6')
 
 transform = transforms.Compose([
         transforms.ToPILImage(),
@@ -105,9 +105,9 @@ model = ConvNet(input_channels, num_filters=16, out_classes=7).to('cpu')
 # Double check if model exists
 #FOLDER_NAME = 'photos_colored_strings_cropped'
 #FOLDER_NAME = 'photos_colored_strings_cropped_augmented'
-#FOLDER_NAME = 'photos_colored_strings'
+FOLDER_NAME = 'photos_colored_strings'
 #FOLDER_NAME = 'photos_all_group_members'
-FOLDER_NAME = 'photos_all_group_members_cropped_augmented'
+#FOLDER_NAME = 'photos_all_group_members_cropped_augmented'
 
 
 model.load_state_dict(torch.load(os.getcwd() + '\\' + FOLDER_NAME + '.pth'))
@@ -133,12 +133,12 @@ with torch.no_grad():
 
         # do something with output ...
         ####################################################################
-
-        left = 700
-        right = 1200
-        top = 550
-        bottom = 900
-        image = image[top:bottom, left:right]
+        if crop:
+            left = 700
+            right = 1200
+            top = 550
+            bottom = 900
+            image = image[top:bottom, left:right]
         cv2.imshow('Video', image)
         if cv2.waitKey(1) == 27:
             exit(0)
