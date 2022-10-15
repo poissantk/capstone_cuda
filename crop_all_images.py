@@ -36,12 +36,12 @@ def crop():
 
                 # Setting the points for cropped image
                 left_right_shift = random.randint(-50, 50)
-                left = 700 + left_right_shift
-                right = 1200 + left_right_shift
+                left = 500 + left_right_shift
+                right = 1400 + left_right_shift
 
                 top_bottom_shift = random.randint(-50, 50)
-                top = 350 + top_bottom_shift
-                bottom = 700 + top_bottom_shift
+                top = 150 + top_bottom_shift
+                bottom = 900 + top_bottom_shift
 
                 f, e = os.path.splitext(fullpath)
                 imCrop = im.crop((left, top, right, bottom))
