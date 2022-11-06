@@ -30,7 +30,7 @@ cap = cv2.VideoCapture(1, cv2.CAP_DSHOW)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
 cap.set(cv2.CAP_PROP_FPS, 36)
-crop = False
+crop = True
 """while True:
     left = 700
     right = 1200
@@ -134,9 +134,9 @@ with torch.no_grad():
         # do something with output ...
         ####################################################################
         if crop:
-            left = 700
-            right = 1200
-            top = 550
+            left = 500
+            right = 1400
+            top = 150
             bottom = 900
             image = image[top:bottom, left:right]
         cv2.imshow('Video', image)
