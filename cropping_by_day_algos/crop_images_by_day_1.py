@@ -6,10 +6,10 @@ import random
 paths = ["photos_split_by_day\\1\\string1",
          "photos_split_by_day\\1\\string2",
          "photos_split_by_day\\1\\string3",
-         "photos_split_by_day\\1\\string4",
-         "photos_split_by_day\\1\\string5",
-         "photos_split_by_day\\1\\string6",
-         "photos_split_by_day\\1\\no_string"]
+         "photos_split_by_day\\1\\string4"]
+         #"photos_split_by_day\\1\\string5",
+         #"photos_split_by_day\\1\\string6",
+         #"photos_split_by_day\\1\\no_string"]
 
 
 
