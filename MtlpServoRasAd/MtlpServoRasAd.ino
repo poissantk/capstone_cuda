@@ -4,32 +4,32 @@ String command;
 #define potentiometer_pin A0
 #include <Servo.h>
 
-Servo myservoE;
-Servo myservoA;
-Servo myservoD;
+Servo myservoP;
 Servo myservoG;
+Servo myservoO;
 Servo myservoB;
-Servo myservoE1;
+Servo myservoY;
+Servo myservoR;
 
 void setup(){
   Serial.begin(9600);
-  myservoE.attach(4);
-  myservoA.attach(5);
-  myservoD.attach(6); 
-  myservoG.attach(7);
-  myservoB.attach(8);
-  myservoE1.attach(9);
+  myservoP.attach(4);
+  myservoG.attach(5);
+  myservoO.attach(6); 
+  myservoB.attach(7);
+  myservoY.attach(8);
+  myservoR.attach(9);
   
 }
 
 void loop(){
   
-  myservoE.write(90);
-  myservoA.write(90);
-  myservoD.write(90);
+  myservoP.write(90);
   myservoG.write(90);
-  myservoB.attach(90);
-  myservoE1.attach(90);
+  myservoO.write(90);
+  myservoB.write(90);
+  myservoY.attach(90);
+  myservoR.attach(90);
   
  // int reading = analogRead(potentiometer_pin);
 
@@ -39,65 +39,65 @@ void loop(){
     command.trim();
    // Serial.println(command);
     Serial.println(command);
-    if (command.equals("E")){
-    myservoE.write(110);
+    if (command.equals("P")){
+    myservoP.write(110);
     delay(500);
-    myservoE.write(80);
+    myservoP.write(80);
     delay(500);
    
   }
-  else if (command.equals("A")){
-    myservoA.write(110);
+  else if (command.equals("G")){
+    myservoG.write(55);
     delay(500);
-    myservoA.write(80);
-    delay(500);
-  }
-  else if( command.equals("D")){
-    myservoD.write(110);
-    delay(500);
-    myservoD.write(90);
+    myservoG.write(75);
     delay(500);
   }
-  else if( command.equals("G")){
-    myservoG.write(115);
-    delay(1000);
-    myservoG.write(90);
+  else if( command.equals("O")){
+    myservoO.write(110);
+    delay(500);
+    myservoO.write(90);
+    delay(500);
   }
   else if( command.equals("B")){
-    myservoB.write(110);
+    myservoB.write(115);
+    delay(1000);
+    myservoB.write(90);
+  }
+  else if( command.equals("Y")){
+    myservoY.write(110);
     delay(500);
-    myservoB.write(75);
+    myservoY.write(75);
     delay(500);
   }
-  else if( command.equals("E1")){
-    myservoE1.write(100);
+  else if( command.equals("R")){
+    myservoR.write(100);
     delay(500);
-    myservoE1.write(70);
+    myservoR.write(70);
     delay(500);
   }
   else if( command.equals("all")){
-    myservoE.write(0);
-    myservoA.write(0);
-    myservoD.write(0);
+    myservoP.write(0);
     myservoG.write(0);
+    myservoO.write(0);
     myservoB.write(0);
-    myservoE1.write(0);
+    myservoY.write(0);
+    myservoR.write(0);
   }
   else if( command.equals("off")){
-    myservoE.write(0);
-    myservoA.write(0);
-    myservoD.write(0);
+    myservoP.write(0);
     myservoG.write(0);
+    myservoO.write(0);
     myservoB.write(0);
-    myservoE1.write(0);
+    myservoY.write(0);
+    myservoR.write(0);
   }
   else{
-    myservoE.write(0);
-    myservoA.write(0);
-    myservoD.write(0);
+    myservoP.write(0);
     myservoG.write(0);
+    myservoO.write(0);
     myservoB.write(0);
-    myservoE1.write(0);
+    myservoY.write(0);
+    myservoR.write(0);
   }
 }
 
