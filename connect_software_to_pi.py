@@ -191,17 +191,17 @@ with torch.no_grad():
             # print(line)
             print(top_string)
             if top_string == "string1":
-                ser.write(b"E\n")
+                ser.write(b"P\n")
             elif top_string == "string2":
-                ser.write(b"A\n")
-            elif top_string == "string3":
-                ser.write(b"D\n")
-            elif top_string == "string4":
                 ser.write(b"G\n")
-            elif top_string == "string5":
+            elif top_string == "string3":
+                ser.write(b"O\n")
+            elif top_string == "string4":
                 ser.write(b"B\n")
+            elif top_string == "string5":
+                ser.write(b"Y\n")
             elif top_string == "string6":
-                ser.write(b"E1\n")
+                ser.write(b"R\n")
             else:
                 ser.write(b"all\n")
             time.sleep(1)
