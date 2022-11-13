@@ -122,7 +122,8 @@ model = get_pretrained_model('vgg16')
 #FOLDER_NAME = 'photos_all_group_members'
 #FOLDER_NAME = 'photos_all_group_members_cropped_augmented'
 # FOLDER_NAME = "vgg16-transfer-4.pt"
-FOLDER_NAME = "vgg16-regularization"
+# FOLDER_NAME = "vgg16-regularization"
+FOLDER_NAME = "vgg16-60-rotation-new-crop"
 
 
 model.load_state_dict(torch.load(os.getcwd() + '\\' + FOLDER_NAME + '.pth'))
@@ -140,7 +141,7 @@ last_logged = time.time()
 frame_count = 0
 
 # added
-ser = serial.Serial('/dev/ttyACM0',9600,timeout=1)
+ser = serial.Serial('COM3',9600,timeout=1)
 ser.flush()
 
 with torch.no_grad():
@@ -185,22 +186,24 @@ with torch.no_grad():
             # connecting to hardware
             top_string = classes[top[0][0]]  # list[top choice][idx]
 
-            if ser.in_waiting > 0:
-                line = ser.readline().decode('utf-8').rstrip()
-                print(line)
-                if top_string == "string1":
-                    ser.write(b"E\n")
-                elif top_string == "string2":
-                    ser.write(b"A\n")
-                elif top_string == "string3":
-                    ser.write(b"D\n")
-                elif top_string == "string4":
-                    ser.write(b"G\n")
-                elif top_string == "string5":
-                    ser.write(b"B\n")
-                elif top_string == "string6":
-                    ser.write(b"E1\n")
-                else:
-                    ser.write(b"all\n")
+            # if ser.in_waiting > 0:
+            #     line = ser.readline().decode('utf-8').rstrip()
+            # print(line)
+            print(top_string)
+            if top_string == "string1":
+                ser.write(b"E\n")
+            elif top_string == "string2":
+                ser.write(b"A\n")
+            elif top_string == "string3":
+                ser.write(b"D\n")
+            elif top_string == "string4":
+                ser.write(b"G\n")
+            elif top_string == "string5":
+                ser.write(b"B\n")
+            elif top_string == "string6":
+                ser.write(b"E1\n")
+            else:
+                ser.write(b"all\n")
+            time.sleep(1)
 
 
