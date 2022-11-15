@@ -123,7 +123,7 @@ model = get_pretrained_model('vgg16')
 #FOLDER_NAME = 'photos_all_group_members_cropped_augmented'
 # FOLDER_NAME = "vgg16-transfer-4.pt"
 # FOLDER_NAME = "vgg16-regularization"
-FOLDER_NAME = "vgg16-60-rotation-new-crop"
+FOLDER_NAME = "vgg16-60-rotation-new-crop-keep-going"
 
 
 model.load_state_dict(torch.load(os.getcwd() + '\\' + FOLDER_NAME + '.pth'))
@@ -154,9 +154,9 @@ with torch.no_grad():
         # do something with output ...
         ####################################################################
         if crop:
-            left = 500
-            right = 1400
-            top = 150
+            left = 600
+            right = 1200
+            top = 550
             bottom = 900
             image = image[top:bottom, left:right]
         cv2.imshow('Video', image)
@@ -190,20 +190,21 @@ with torch.no_grad():
             #     line = ser.readline().decode('utf-8').rstrip()
             # print(line)
             print(top_string)
-            if top_string == "string1":
+            if top_string == "string6":
                 ser.write(b"P\n")
-            elif top_string == "string2":
-                ser.write(b"G\n")
-            elif top_string == "string3":
-                ser.write(b"O\n")
-            elif top_string == "string4":
-                ser.write(b"B\n")
             elif top_string == "string5":
+                ser.write(b"G\n")
+            elif top_string == "string4":
+                ser.write(b"O\n")
+            elif top_string == "string3":
+                ser.write(b"B\n")
+            elif top_string == "string2":
                 ser.write(b"Y\n")
-            elif top_string == "string6":
+            elif top_string == "string1":
                 ser.write(b"R\n")
             else:
-                ser.write(b"all\n")
+                pass
+                # ser.write(b"all\n")
             time.sleep(1)
 
 
