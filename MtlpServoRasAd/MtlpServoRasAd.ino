@@ -28,8 +28,8 @@ void loop(){
   myservoG.write(90);
   myservoO.write(90);
   myservoB.write(90);
-  myservoY.attach(90);
-  myservoR.attach(90);
+  myservoY.write(90);
+  myservoR.write(90);
   
  // int reading = analogRead(potentiometer_pin);
 
@@ -38,7 +38,7 @@ void loop(){
     command = Serial.readStringUntil('\n');
     command.trim();
    // Serial.println(command);
-    Serial.println(command);
+   // Serial.println(command);
     if (command.equals("P")){
     myservoP.write(110);
     delay(500);
@@ -60,8 +60,9 @@ void loop(){
   }
   else if( command.equals("B")){
     myservoB.write(115);
-    delay(1000);
+    delay(500);
     myservoB.write(90);
+    delay(500);
   }
   else if( command.equals("Y")){
     myservoY.write(110);

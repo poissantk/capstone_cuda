@@ -1,6 +1,7 @@
 import time
 
 import numpy as np
+import serial
 from torchvision import models, transforms
 
 import cv2
@@ -104,8 +105,8 @@ model = ConvNet(input_channels, num_filters=16, out_classes=7).to('cpu')
 # LOAD MODEL FROM DISK
 # Double check if model exists
 #FOLDER_NAME = 'photos_colored_strings_cropped'
-#FOLDER_NAME = 'photos_colored_strings_cropped_augmented'
-FOLDER_NAME = 'photos_colored_strings'
+FOLDER_NAME = 'photos_colored_strings_cropped_augmented'
+#FOLDER_NAME = 'photos_colored_strings'
 #FOLDER_NAME = 'photos_all_group_members'
 #FOLDER_NAME = 'photos_all_group_members_cropped_augmented'
 
@@ -123,6 +124,10 @@ net = torch.jit.script(net)
 started = time.time()
 last_logged = time.time()
 frame_count = 0
+
+# added
+ser = serial.Serial('COM3',9600,timeout=1)
+ser.flush()
 
 with torch.no_grad():
     while True:
@@ -156,11 +161,36 @@ with torch.no_grad():
         # log model performance
         frame_count += 1
         now = time.time()
-        if now - last_logged > 1:
+        if now - last_logged > 1:   # TODO: and frame_count == 2 or something like that
             print(f"{frame_count / (now-last_logged)} fps")
             last_logged = now
             frame_count = 0
             top = list(enumerate(output[0].softmax(dim=0)))
             top.sort(key=lambda x: x[1], reverse=True)
-            for idx, val in top[:7]:
-                print(f"{val.item() * 100:.2f}% {classes[idx]}")
+
+            # connecting to hardware
+            top_string = classes[top[0][0]]  # list[top choice][idx]
+
+            # if ser.in_waiting > 0:
+            #     line = ser.readline().decode('utf-8').rstrip()
+            # print(line)
+            print(top_string)
+            if top_string == "string6":
+                ser.write(b"P\n")
+            elif top_string == "string5":
+                ser.write(b"G\n")
+            elif top_string == "string4":
+                ser.write(b"O\n")
+            elif top_string == "string3":
+                ser.write(b"B\n")
+            elif top_string == "string2":
+                ser.write(b"Y\n")
+            elif top_string == "string1":
+                ser.write(b"R\n")
+            else:
+                pass
+                #ser.write(b"all\n")
+            time.sleep(2)
+
+
+
