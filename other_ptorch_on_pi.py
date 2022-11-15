@@ -120,7 +120,8 @@ model = get_pretrained_model('vgg16')
 #FOLDER_NAME = 'photos_all_group_members'
 #FOLDER_NAME = 'photos_all_group_members_cropped_augmented'
 # FOLDER_NAME = "vgg16-transfer-4.pt"
-FOLDER_NAME = "vgg16-regularization"
+# FOLDER_NAME = "vgg16-regularization"
+FOLDER_NAME = "vgg16-60-new-crop-keep-going"
 
 
 model.load_state_dict(torch.load(os.getcwd() + '\\' + FOLDER_NAME + '.pth'))
@@ -147,9 +148,9 @@ with torch.no_grad():
         # do something with output ...
         ####################################################################
         if crop:
-            left = 500
-            right = 1400
-            top = 150
+            left = 600
+            right = 1200
+            top = 550
             bottom = 900
             image = image[top:bottom, left:right]
         cv2.imshow('Video', image)
